@@ -2,8 +2,12 @@ Package: puBuild
 Title: Deixa Power Ups Prontos Para Uso
 Version: 0.0.0.9000
 Authors@R: person("Fernando", "Corrêa", email = "fptcorrea@gmail.com", role = c("aut", "cre"))
-Description: Imita o que o bookdown faz em escala muito menor. Disponibiliza as funções básicas que convertem os Rmd's de um PU em um .html pronto pra uso em uma Hugo-page. 
-Depends: R (>= 3.3.2)
+Description: Imita o que o bookdown faz em escala muito menor. Disponibiliza as
+    funções básicas que convertem os Rmd's de um PU em um .html pronto pra uso em
+    uma Hugo-page.
+Depends:
+    R (>= 3.3.2)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 5.0.1
