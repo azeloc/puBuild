@@ -4,7 +4,7 @@
 \alias{Rmd_bind}
 \title{Concatena Capítulos De Um Power Up}
 \usage{
-Rmd_bind(dir = ".", titulo, output_file = NULL)
+Rmd_bind(dir = ".", titulo, output_file = NULL, output_dir = NULL)
 }
 \description{
 Concatena os capítulos de um power up em um único arquivo index.html.

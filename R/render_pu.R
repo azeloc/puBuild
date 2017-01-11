@@ -9,13 +9,20 @@
 #'@par output_dir nome do diretório saída
 #'
 #'@export
-Rmd_bind <- function(dir = ".", titulo, output_file = NULL){
+Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
+                     output_dir = 'content'){
 
-  book_header = sprintf("---\ntitle: '%s'\n") %>%
+  suppressWarnings(dir.create(output_dir))
 
-    readLines(
-    textConnection("---\ntitle: 'Title'\nalways_allow_html: yes\n---"))
+  book_header = sprintf("---\ntitle: '%s'\n---", titulo) %>%
+    textConnection %>%
+    readLines
 
+  dir_list <- list.dirs(recursive = F)
+
+  for(d in dir_list){
+    copy_dir(d, sprintf("%s/%s", output_dir, basename(d)))
+  }
 
   if(length(grep("index.Rmd", list.files(dir, full.names = T))) > 0){
     warning("index.Rmd already exists")
@@ -31,5 +38,10 @@ Rmd_bind <- function(dir = ".", titulo, output_file = NULL){
     text <- c(sprintf("#%s",noquote(titulo)),text[-c(hspan[1]:hspan[2])])
     write(text, sep = "", file = f, append = T)
   }
-  rmarkdown::render(f, blogdown::html_page())
+  rmarkdown::render(f, blogdown::html_page(), output_file, output_dir,
+                    intermediates_dir = output_dir)
+}
+
+copy_dir <- function(from, to){
+  system(paste("cp -r", from, to))
 }
