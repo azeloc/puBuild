@@ -10,11 +10,11 @@
 #'
 #'@export
 Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
-                     output_dir = 'content'){
+                     output_dir = 'content', output = rmarkdown::md_document(preserve_yaml = T)){
 
   suppressWarnings(dir.create(output_dir))
 
-  book_header = sprintf("---\ntitle: '%s'\n---", titulo) %>%
+  book_header = sprintf("---\ndate: '%s'\ntitle: %s\n---", Sys.time(), titulo) %>%
     textConnection %>%
     readLines
 
@@ -38,7 +38,7 @@ Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
     text <- c(sprintf("#%s",noquote(titulo)),text[-c(hspan[1]:hspan[2])])
     write(text, sep = "", file = f, append = T)
   }
-  rmarkdown::render(f, blogdown::html_page(), output_file, output_dir,
+  rmarkdown::render(f, output, output_file, output_dir,
                     intermediates_dir = output_dir)
 }
 
