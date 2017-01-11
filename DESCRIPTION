@@ -11,4 +11,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 5.0.1
-Imports: magrittr
+Imports: magrittr,
+    blogdown
+Remotes:
+  rstudio/blogdown
