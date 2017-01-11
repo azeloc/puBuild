@@ -42,7 +42,7 @@ Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
     write(text, sep = "", file = f, append = T)
   }
 
-  ezknitr::ezknit(file = f, out_dir = "content", fig_dir = "figures", keep_html = FALSE)
+  ezknitr::ezknit(file = f, out_dir = output_dir, fig_dir = "figures", keep_html = FALSE)
 }
 
 copy_dir <- function(from, to){
