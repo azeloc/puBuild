@@ -10,36 +10,39 @@
 #'
 #'@export
 Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
-                     output_dir = 'content', output = rmarkdown::md_document(preserve_yaml = T)){
+                     output_dir = 'content/'){
 
+  # cria o header do novo arquivo
+  book_header = sprintf("---\ntitle: %s\n---\n", titulo) %>%
+    textConnection() %>%
+    readLines()
+
+  # lista e copia os diretórios do PU
+  dir_list <- list.dirs(path = dir, recursive = F)
   suppressWarnings(dir.create(output_dir))
-
-  book_header = sprintf("---\ndate: '%s'\ntitle: %s\n---", Sys.time(), titulo) %>%
-    textConnection %>%
-    readLines
-
-  dir_list <- list.dirs(recursive = F)
-
   for(d in dir_list){
     copy_dir(d, sprintf("%s/%s", output_dir, basename(d)))
   }
 
+  # Avisa se já existir um arquivo index.Rmd
   if(length(grep("index.Rmd", list.files(dir, full.names = T))) > 0){
     warning("index.Rmd already exists")
   }
-  f <- sprintf("%s/index.Rmd",dir)
-  write(book_header, file = f)
+
+  # lista todos arquivos .Rmd que tem no PU
   cfiles <- list.files(dir, pattern = "*.Rmd", full.names = T)
-  ttext <- NULL
+
+  # Cria um arquivo .Rmd com o header
+  f <- sprintf("%s/index.Rmd", dir)
+  write(book_header, file = f)
+
+  # adiciona um child para cada arquivo
   for(i in 1:length(cfiles)){
-    text <- readLines(cfiles[i])
-    titulo <- gsub('title: |"', "",grep("title", text, value = T))
-    hspan <- grep("---", text)
-    text <- c(sprintf("#%s",noquote(titulo)),text[-c(hspan[1]:hspan[2])])
+    text <- sprintf('```{r child = "%s"} \n```\n', cfiles[i])
     write(text, sep = "", file = f, append = T)
   }
-  rmarkdown::render(f, output, output_file, output_dir,
-                    intermediates_dir = output_dir)
+
+  ezknitr::ezknit(file = f, out_dir = output_dir, fig_dir = "figures", keep_html = FALSE)
 }
 
 copy_dir <- function(from, to){
