@@ -43,6 +43,18 @@ Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
   }
 
   ezknitr::ezknit(file = f, out_dir = output_dir, fig_dir = "figures", keep_html = FALSE)
+
+  # limpar o resultado...
+  # por causa da função go_interactive do tutorial, ele insere algumas
+  # coisas antes da header do markdown
+
+  linhas <- readLines(sprintf("%s/index.md", output_dir))
+  indice <- min((1:length(linhas))[stringr::str_detect(linhas, '---')])
+
+  if(indice != 1)
+    linhas <- linhas[-c(1:(indice-1))]
+
+  writeLines(linhas, sprintf("%s/index.md", output_dir))
 }
 
 copy_dir <- function(from, to){
