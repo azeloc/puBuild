@@ -6,7 +6,7 @@ Description: Imita o que o bookdown faz em escala muito menor. Disponibiliza as
     funções básicas que convertem os Rmd's de um PU em um .html pronto pra uso em
     uma Hugo-page.
 Depends:
-    R (>= 3.3.1)
+    R (>= 3.2.1)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
