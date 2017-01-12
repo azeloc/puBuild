@@ -13,7 +13,7 @@ Rmd_bind <- function(dir = ".", titulo, output_file = NULL,
                      output_dir = 'content/'){
 
   # cria o header do novo arquivo
-  book_header = sprintf("---\ntitle: %s\n---\n", titulo) %>%
+  book_header = sprintf("---\ntitle: %s\ndate: '%s'\n---\n", titulo, Sys.Date()) %>%
     textConnection() %>%
     readLines()
 
