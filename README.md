@@ -8,7 +8,7 @@ You can install puBuild from github with:
 
 ```R
 # install.packages("devtools")
-# devtools::install_github("azeloc/puBuild")
+# devtools::install_github("curso-r/puBuild")
 ```
 
 ## Example
